@@ -15,6 +15,10 @@ function App() {
     if (e.key === 'Enter') addTask()
   }
 
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+
   return (
     <div className="container">
       <div className="todo-app">
@@ -47,7 +51,7 @@ function App() {
                 <span>{task.text}</span>
                 <div className="task-buttons">
                   <button className="edit-btn">✏️</button>
-                  <button className="delete-btn">🗑️</button>
+                  <button className="delete-btn" onClick={() => deleteTask(task.id)}>🗑️</button>
                 </div>
               </li>
             ))}
