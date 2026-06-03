@@ -5,6 +5,16 @@ function App() {
   const [tasks, setTasks] = useState([])
   const [inputValue, setInputValue] = useState('')
 
+  const addTask = () => {
+    if (!inputValue.trim()) return
+    setTasks([...tasks, { id: Date.now(), text: inputValue.trim(), completed: false }])
+    setInputValue('')
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') addTask()
+  }
+
   return (
     <div className="container">
       <div className="todo-app">
@@ -20,8 +30,9 @@ function App() {
             placeholder="Add a new Task..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
-          <button type="button">+</button>
+          <button type="button" onClick={addTask}>+</button>
         </div>
 
         {/* Task list — Step 3 */}
