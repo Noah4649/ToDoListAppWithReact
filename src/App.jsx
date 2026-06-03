@@ -23,7 +23,6 @@ function App() {
 
         {/* Progress bar — Step 7 */}
 
-        {/* Input area */}
         <div className="input-area">
           <input
             type="text"
@@ -35,9 +34,24 @@ function App() {
           <button type="button" onClick={addTask}>+</button>
         </div>
 
-        {/* Task list — Step 3 */}
         <div className="todos-container">
           <ul id="task-list">
+            {tasks.map((task) => (
+              <li key={task.id} className={task.completed ? 'completed' : ''}>
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  checked={task.completed}
+                  onChange={() => {}}
+                />
+                <span>{task.text}</span>
+                <div className="task-buttons">
+                  <button className="edit-btn">✏️</button>
+                  <button className="delete-btn">🗑️</button>
+                </div>
+              </li>
+            ))}
+
             {/* Empty state — Step 8 */}
           </ul>
         </div>
