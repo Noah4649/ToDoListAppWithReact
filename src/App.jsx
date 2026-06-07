@@ -50,7 +50,6 @@ function App() {
 
         <h1>To-Do App</h1>
 
-        {/* Progress bar */}
         <div className="progress-container">
           <div className="progress-bar-wrapper">
             <div
@@ -101,7 +100,12 @@ function App() {
               </li>
             ))}
 
-            {/* Empty state — Step 8 */}
+            {tasks.length === 0 && (
+              <div className="empty-state">
+                <img src="/empty.png" alt="No tasks" />
+                <p>No tasks yet. Add one above!</p>
+              </div>
+            )}
           </ul>
         </div>
 
