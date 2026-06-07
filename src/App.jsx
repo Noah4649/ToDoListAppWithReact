@@ -6,6 +6,10 @@ function App() {
   const [inputValue, setInputValue] = useState('')
   const [editId, setEditId] = useState(null)
 
+  const completedCount = tasks.filter((task) => task.completed).length
+  const totalCount = tasks.length
+  const progressPercent = totalCount === 0 ? 0 : Math.round((completedCount / totalCount) * 100)
+
   const addTask = () => {
     if (!inputValue.trim()) return
 
@@ -46,7 +50,18 @@ function App() {
 
         <h1>To-Do App</h1>
 
-        {/* Progress bar — Step 7 */}
+        {/* Progress bar */}
+        <div className="progress-container">
+          <div className="progress-bar-wrapper">
+            <div
+              className="progress-bar"
+              style={{ width: `${progressPercent}%` }}
+            ></div>
+          </div>
+          <div className="task-counter">
+            <span>{completedCount}/{totalCount}</span>
+          </div>
+        </div>
 
         <div className="input-area">
           <input
