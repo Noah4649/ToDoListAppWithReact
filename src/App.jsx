@@ -19,6 +19,12 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  const toggleTask = (id) => {
+    setTasks(tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    ))
+  }
+
   return (
     <div className="container">
       <div className="todo-app">
@@ -46,11 +52,11 @@ function App() {
                   type="checkbox"
                   className="checkbox"
                   checked={task.completed}
-                  onChange={() => {}}
+                  onChange={() => toggleTask(task.id)}
                 />
                 <span>{task.text}</span>
                 <div className="task-buttons">
-                  <button className="edit-btn">✏️</button>
+                  <button className="edit-btn" disabled={task.completed}>✏️</button>
                   <button className="delete-btn" onClick={() => deleteTask(task.id)}>🗑️</button>
                 </div>
               </li>
