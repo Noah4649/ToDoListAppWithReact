@@ -4,10 +4,20 @@ import './App.css'
 function App() {
   const [tasks, setTasks] = useState([])
   const [inputValue, setInputValue] = useState('')
+  const [editId, setEditId] = useState(null)
 
   const addTask = () => {
     if (!inputValue.trim()) return
-    setTasks([...tasks, { id: Date.now(), text: inputValue.trim(), completed: false }])
+
+    if (editId !== null) {
+      setTasks(tasks.map((task) =>
+        task.id === editId ? { ...task, text: inputValue.trim() } : task
+      ))
+      setEditId(null)
+    } else {
+      setTasks([...tasks, { id: Date.now(), text: inputValue.trim(), completed: false }])
+    }
+
     setInputValue('')
   }
 
@@ -23,6 +33,11 @@ function App() {
     setTasks(tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     ))
+  }
+
+  const editTask = (task) => {
+    setInputValue(task.text)
+    setEditId(task.id)
   }
 
   return (
@@ -41,7 +56,9 @@ function App() {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyPress}
           />
-          <button type="button" onClick={addTask}>+</button>
+          <button type="button" onClick={addTask}>
+            {editId !== null ? '✔️' : '+'}
+          </button>
         </div>
 
         <div className="todos-container">
@@ -56,8 +73,15 @@ function App() {
                 />
                 <span>{task.text}</span>
                 <div className="task-buttons">
-                  <button className="edit-btn" disabled={task.completed}>✏️</button>
-                  <button className="delete-btn" onClick={() => deleteTask(task.id)}>🗑️</button>
+                  <button
+                    className="edit-btn"
+                    disabled={task.completed}
+                    onClick={() => editTask(task)}
+                  >✏️</button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteTask(task.id)}
+                  >🗑️</button>
                 </div>
               </li>
             ))}
